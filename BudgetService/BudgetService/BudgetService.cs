@@ -26,39 +26,34 @@ namespace BudgetService
             {
                 return 0;
             }
-
             
-
-            // 處理 SDate 零碎、處理 EDate 零碎
             if (startDateTime.ToString("yyyyMM") == endDateTime.ToString("yyyyMM"))
             {
-                int diff = (endDateTime - startDateTime).Days + 1;
+                var diff = (endDateTime - startDateTime).Days + 1;
                 return GetBudgetOfThatMonth(startDateTime, diff);
             }
-            else
-            {
-                //處理頭尾
-                int headDays = DateTime.DaysInMonth(startDateTime.Year, startDateTime.Month) - startDateTime.Day + 1;
-                int tailDays = endDateTime.Day;
-                
 
-                //處理中間
-                DateTime currentMonth = startDateTime.AddMonths(1);
-                decimal sumBudget = 0;
-                while (currentMonth.Month < endDateTime.Month && currentMonth.Year <= endDateTime.Year)
-                {
-                    sumBudget += (_allBudgets.SingleOrDefault(x => x.YearMonth == currentMonth.ToString("yyyyMM"))?.Amount ?? 0);
-                    currentMonth = currentMonth.AddMonths(1);
-                }
-                return GetBudgetOfThatMonth(startDateTime, headDays) + sumBudget + GetBudgetOfThatMonth(endDateTime, tailDays);
+            //處理頭尾
+            var headDays = DateTime.DaysInMonth(startDateTime.Year, startDateTime.Month) - startDateTime.Day + 1;
+            var tailDays = endDateTime.Day;
+
+            //處理中間
+            var currentMonth = startDateTime.AddMonths(1);
+            decimal sumBudget = 0;
+            while (currentMonth.Month < endDateTime.Month && currentMonth.Year <= endDateTime.Year)
+            {
+                sumBudget += (_allBudgets.SingleOrDefault(x => x.YearMonth == currentMonth.ToString("yyyyMM"))?.Amount ?? 0);
+                currentMonth = currentMonth.AddMonths(1);
             }
+
+            return GetBudgetOfThatMonth(startDateTime, headDays) + sumBudget + GetBudgetOfThatMonth(endDateTime, tailDays);
         }
 
-        private decimal GetBudgetOfThatMonth(DateTime yyyymm, int days)
+        private decimal GetBudgetOfThatMonth(DateTime currentDateTime, int days)
         {
-            var budget = _allBudgets.SingleOrDefault(x => x.YearMonth == yyyymm.ToString("yyyyMM"));
-            var daysInMonth = DateTime.DaysInMonth(yyyymm.Year, yyyymm.Month);
-            return (decimal)(days * ((budget?.Amount ?? 0) / daysInMonth));
+            var budget = _allBudgets.SingleOrDefault(x => x.YearMonth == currentDateTime.ToString("yyyyMM"));
+            var daysInMonth = DateTime.DaysInMonth(currentDateTime.Year, currentDateTime.Month);
+            return days * ((budget?.Amount ?? 0) / daysInMonth);
         }
     }
 }
