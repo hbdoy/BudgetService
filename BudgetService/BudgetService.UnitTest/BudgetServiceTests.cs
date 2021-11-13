@@ -7,151 +7,94 @@ namespace BudgetService.UnitTest
 {
     public class BudgetServiceTests
     {
+        BudgetService _service;
+        private readonly Mock<IBudgetRepository> _mockBudgetRepo = new Mock<IBudgetRepository>();
+
+        public BudgetServiceTests()
+        {
+            _mockBudgetRepo.Setup(m => m.GetAll())
+                .Returns(new List<Budget>()
+                {
+                    new Budget("201902", 2800),
+                    new Budget("201903", 6200),
+                    new Budget("201904", 6000),
+                    new Budget("201906", 3000),
+                    new Budget("202002", 2900),
+                    new Budget("202003", 6200),
+                    new Budget("202103", 6200),
+                    new Budget("202111", 3000),
+                });
+        }
+
         [Fact]
         public void SameDay()
         {
-            var mockBudgetRepo = new Mock<IBudgetRepository>();
-            mockBudgetRepo.Setup(m => m.GetAll())
-                .Returns(new List<Budget>()
-                {
-                    new Budget("202111", 3000)
-                });
+            _service = new BudgetService(_mockBudgetRepo.Object);
 
-            var service = new BudgetService(mockBudgetRepo.Object);
-
-            var result =
-                service.Query(new DateTime(2021, 11, 1), new DateTime(2021, 11, 1));
-
-            Assert.Equal(100, result);
+            BudgetShouldBe(new DateTime(2021, 11, 1), new DateTime(2021, 11, 1), 100);
         }
 
         [Fact]
         public void InvalidDateInputWillReturnZero()
         {
-            var mockBudgetRepo = new Mock<IBudgetRepository>();
-            mockBudgetRepo.Setup(m => m.GetAll())
-                .Returns(new List<Budget>()
-                {
-                    new Budget("202111", 3000)
-                });
+            _service = new BudgetService(_mockBudgetRepo.Object);
 
-            var service = new BudgetService(mockBudgetRepo.Object);
-
-            var result =
-                service.Query(new DateTime(2021, 11, 14), new DateTime(2021, 11, 1));
-
-            Assert.Equal(0, result);
+            BudgetShouldBe(new DateTime(2021, 11, 14), new DateTime(2021, 11, 1), 0);
         }
+
         [Fact]
         public void CrossMonth()
         {
-            var mockBudgetRepo = new Mock<IBudgetRepository>();
-            mockBudgetRepo.Setup(m => m.GetAll())
-                .Returns(new List<Budget>()
-                {
-                    new Budget("201902", 2800),
-                    new Budget("201903", 6200)
-                });
+            _service = new BudgetService(_mockBudgetRepo.Object);
 
-            var service = new BudgetService(mockBudgetRepo.Object);
-
-            var result =
-                service.Query(new DateTime(2019, 2, 27), new DateTime(2019, 3, 2));
-
-            Assert.Equal(600, result);
+            BudgetShouldBe(new DateTime(2019, 2, 27), new DateTime(2019, 3, 2), 600);
         }
+
         [Fact]
         public void CrossMultiMonth()
         {
-            var mockBudgetRepo = new Mock<IBudgetRepository>();
-            mockBudgetRepo.Setup(m => m.GetAll())
-                .Returns(new List<Budget>()
-                {
-                    new Budget("201902", 2800),
-                    new Budget("201903", 31),
-                    new Budget("201904", 6000)
-                });
+            _service = new BudgetService(_mockBudgetRepo.Object);
 
-            var service = new BudgetService(mockBudgetRepo.Object);
-
-            var result =
-                service.Query(new DateTime(2019, 2, 27), new DateTime(2019, 4, 2));
-
-            Assert.Equal(631, result);
+            BudgetShouldBe(new DateTime(2019, 2, 27), new DateTime(2019, 4, 2), 6800);
         }
+
         [Fact]
         public void CrossMonthWithEmpty()
         {
-            var mockBudgetRepo = new Mock<IBudgetRepository>();
-            mockBudgetRepo.Setup(m => m.GetAll())
-                .Returns(new List<Budget>()
-                {
-                    new Budget("201902", 2800),
-                    new Budget("201904", 6000)
-                });
+            _service = new BudgetService(_mockBudgetRepo.Object);
 
-            var service = new BudgetService(mockBudgetRepo.Object);
-
-            var result =
-                service.Query(new DateTime(2019, 2, 27), new DateTime(2019, 4, 2));
-
-            Assert.Equal(600, result);
+            BudgetShouldBe(new DateTime(2019, 4, 27), new DateTime(2019, 6, 2), 1000);
         }
 
         [Fact]
         public void EmptyMonth()
         {
-            var mockBudgetRepo = new Mock<IBudgetRepository>();
-            mockBudgetRepo.Setup(m => m.GetAll())
-                .Returns(new List<Budget>()
-                {
-                });
+            _service = new BudgetService(_mockBudgetRepo.Object);
 
-            var service = new BudgetService(mockBudgetRepo.Object);
-
-            var result =
-                service.Query(new DateTime(2019, 2, 27), new DateTime(2019, 2, 28));
-
-            Assert.Equal(0, result);
+            BudgetShouldBe(new DateTime(2019, 1, 27), new DateTime(2019, 1, 28), 0);
         }
-
-
+        
         [Fact]
         public void LeapYear()
         {
-            var mockBudgetRepo = new Mock<IBudgetRepository>();
-            mockBudgetRepo.Setup(m => m.GetAll())
-                .Returns(new List<Budget>()
-                {
-                    new Budget("202002", 2900),
-                    new Budget("202003", 6200)
-                });
+            _service = new BudgetService(_mockBudgetRepo.Object);
 
-            var service = new BudgetService(mockBudgetRepo.Object);
-
-            var result =
-                service.Query(new DateTime(2020, 2, 27), new DateTime(2020, 3, 2));
-
-            Assert.Equal(700, result);
+            BudgetShouldBe(new DateTime(2020, 2, 27), new DateTime(2020, 3, 2), 700);
         }
 
         [Fact]
         public void CrossYear()
         {
-            var mockBudgetRepo = new Mock<IBudgetRepository>();
-            mockBudgetRepo.Setup(m => m.GetAll())
-                .Returns(new List<Budget>()
-                {
-                    new Budget("202002", 2900),
-                    new Budget("202103", 6200)
-                });
+            _service = new BudgetService(_mockBudgetRepo.Object);
 
-            var service = new BudgetService(mockBudgetRepo.Object);
+            BudgetShouldBe(new DateTime(2020, 2, 27), new DateTime(2021, 3, 2), 700);
+        }
 
-            var result =
-                service.Query(new DateTime(2020, 2, 27), new DateTime(2021, 3, 2));
+        private void BudgetShouldBe(DateTime startDateTime, DateTime endDateTime, int expected)
+        {
+            var result = _service.Query(startDateTime, endDateTime);
 
-            Assert.Equal(700, result);
+            Assert.Equal(expected, result);
         }
     }
 }
