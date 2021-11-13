@@ -115,5 +115,24 @@ namespace BudgetService.UnitTest
             Assert.Equal(0, result);
         }
 
+
+        [Fact]
+        public void LeapYear()
+        {
+            var mockBudgetRepo = new Mock<IBudgetRepository>();
+            mockBudgetRepo.Setup(m => m.GetAll())
+                .Returns(new List<Budget>()
+                {
+                    new Budget("202002", 2900),
+                    new Budget("202003", 6200)
+                });
+
+            var service = new BudgetService(mockBudgetRepo.Object);
+
+            var result =
+                service.Query(new DateTime(2020, 2, 27), new DateTime(2020, 3, 2));
+
+            Assert.Equal(700, result);
+        }
     }
 }
