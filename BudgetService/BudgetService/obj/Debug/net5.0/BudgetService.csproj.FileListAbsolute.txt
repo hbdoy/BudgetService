@@ -1,0 +1,15 @@
+C:\Users\hbdoy\Desktop\BudgetService\BudgetService\BudgetService\bin\Debug\net5.0\BudgetService.exe
+C:\Users\hbdoy\Desktop\BudgetService\BudgetService\BudgetService\bin\Debug\net5.0\BudgetService.deps.json
+C:\Users\hbdoy\Desktop\BudgetService\BudgetService\BudgetService\bin\Debug\net5.0\BudgetService.runtimeconfig.json
+C:\Users\hbdoy\Desktop\BudgetService\BudgetService\BudgetService\bin\Debug\net5.0\BudgetService.runtimeconfig.dev.json
+C:\Users\hbdoy\Desktop\BudgetService\BudgetService\BudgetService\bin\Debug\net5.0\BudgetService.dll
+C:\Users\hbdoy\Desktop\BudgetService\BudgetService\BudgetService\bin\Debug\net5.0\ref\BudgetService.dll
+C:\Users\hbdoy\Desktop\BudgetService\BudgetService\BudgetService\bin\Debug\net5.0\BudgetService.pdb
+C:\Users\hbdoy\Desktop\BudgetService\BudgetService\BudgetService\obj\Debug\net5.0\BudgetService.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hbdoy\Desktop\BudgetService\BudgetService\BudgetService\obj\Debug\net5.0\BudgetService.AssemblyInfoInputs.cache
+C:\Users\hbdoy\Desktop\BudgetService\BudgetService\BudgetService\obj\Debug\net5.0\BudgetService.AssemblyInfo.cs
+C:\Users\hbdoy\Desktop\BudgetService\BudgetService\BudgetService\obj\Debug\net5.0\BudgetService.csproj.CoreCompileInputs.cache
+C:\Users\hbdoy\Desktop\BudgetService\BudgetService\BudgetService\obj\Debug\net5.0\BudgetService.dll
+C:\Users\hbdoy\Desktop\BudgetService\BudgetService\BudgetService\obj\Debug\net5.0\ref\BudgetService.dll
+C:\Users\hbdoy\Desktop\BudgetService\BudgetService\BudgetService\obj\Debug\net5.0\BudgetService.pdb
+C:\Users\hbdoy\Desktop\BudgetService\BudgetService\BudgetService\obj\Debug\net5.0\BudgetService.genruntimeconfig.cache
