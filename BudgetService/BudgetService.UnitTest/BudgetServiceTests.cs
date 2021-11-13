@@ -80,7 +80,7 @@ namespace BudgetService.UnitTest
             Assert.Equal(631, result);
         }
         [Fact]
-        public void EmptyMonth()
+        public void CrossMonthWithEmpty()
         {
             var mockBudgetRepo = new Mock<IBudgetRepository>();
             mockBudgetRepo.Setup(m => m.GetAll())
@@ -96,6 +96,23 @@ namespace BudgetService.UnitTest
                 service.Query(new DateTime(2019, 2, 27), new DateTime(2019, 4, 2));
 
             Assert.Equal(600, result);
+        }
+
+        [Fact]
+        public void EmptyMonth()
+        {
+            var mockBudgetRepo = new Mock<IBudgetRepository>();
+            mockBudgetRepo.Setup(m => m.GetAll())
+                .Returns(new List<Budget>()
+                {
+                });
+
+            var service = new BudgetService(mockBudgetRepo.Object);
+
+            var result =
+                service.Query(new DateTime(2019, 2, 27), new DateTime(2019, 2, 28));
+
+            Assert.Equal(0, result);
         }
 
     }
