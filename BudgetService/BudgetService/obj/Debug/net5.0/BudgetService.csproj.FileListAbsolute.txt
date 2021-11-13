@@ -13,3 +13,4 @@ C:\Users\hbdoy\Desktop\BudgetService\BudgetService\BudgetService\obj\Debug\net5.
 C:\Users\hbdoy\Desktop\BudgetService\BudgetService\BudgetService\obj\Debug\net5.0\ref\BudgetService.dll
 C:\Users\hbdoy\Desktop\BudgetService\BudgetService\BudgetService\obj\Debug\net5.0\BudgetService.pdb
 C:\Users\hbdoy\Desktop\BudgetService\BudgetService\BudgetService\obj\Debug\net5.0\BudgetService.genruntimeconfig.cache
+C:\Users\hbdoy\Desktop\BudgetService\BudgetService\BudgetService\obj\Debug\net5.0\BudgetService.csproj.AssemblyReference.cache

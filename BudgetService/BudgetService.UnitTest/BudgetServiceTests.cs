@@ -134,5 +134,24 @@ namespace BudgetService.UnitTest
 
             Assert.Equal(700, result);
         }
+
+        [Fact]
+        public void CrossYear()
+        {
+            var mockBudgetRepo = new Mock<IBudgetRepository>();
+            mockBudgetRepo.Setup(m => m.GetAll())
+                .Returns(new List<Budget>()
+                {
+                    new Budget("202002", 2900),
+                    new Budget("202103", 6200)
+                });
+
+            var service = new BudgetService(mockBudgetRepo.Object);
+
+            var result =
+                service.Query(new DateTime(2020, 2, 27), new DateTime(2021, 3, 2));
+
+            Assert.Equal(700, result);
+        }
     }
 }
